@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Spam Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🤖 AI Spam Email Detector</h1>
+
+    <form action="/predict" method="post">
+        <textarea name="email" rows="5" placeholder="Paste your email content here..."></textarea>
+        <br>
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if prediction_text %}
+        <div class="result">
+            {{ prediction_text }}
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress" style="width: {{ confidence }}%;"></div>
+        </div>
+
+        <p>{{ confidence }}% Confidence</p>
+        <p><strong>Model Used:</strong> {{ model_used }}</p>
+        <div style="margin-top:20px; background: rgba(255,255,255,0.1); padding:10px; border-radius:10px;">
+    <strong>Analyzed Text:</strong>
+    <p>{{ original_text|safe }}</p>
+</div>
+    {% endif %}
+</div>
+
+</body>
+</html>

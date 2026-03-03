@@ -1,0 +1,17 @@
+# Virtual Environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Model files
+spam_model.pkl
+vectorizer.pkl
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
