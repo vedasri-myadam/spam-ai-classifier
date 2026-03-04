@@ -4,8 +4,14 @@ import pickle
 app = Flask(__name__)
 
 # Load trained model and vectorizer
-model = pickle.load(open("spam_model.pkl", "rb"))
-vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+import os
+from model import train_model
+
+if os.path.exists("spam_model.pkl"):
+    model = pickle.load(open("spam_model.pkl", "rb"))
+    vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
+else:
+    model, vectorizer = train_model()
 
 model_name = type(model).__name__
 

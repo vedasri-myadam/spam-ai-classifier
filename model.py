@@ -6,7 +6,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, classification_report
-
+def train_model():
 # Load real dataset
 df = pd.read_csv("sms.tsv", sep="\t", header=None, names=["label", "text"])
 
@@ -34,7 +34,7 @@ lr_model = LogisticRegression(max_iter=1000, class_weight="balanced")
 lr_model.fit(X_train_tfidf, y_train)
 lr_pred = lr_model.predict(X_test_tfidf)
 lr_accuracy = accuracy_score(y_test, lr_pred)
-
+return best_model, vectorizer
 print("Naive Bayes Accuracy:", nb_accuracy)
 print("Logistic Regression Accuracy:", lr_accuracy)
 
