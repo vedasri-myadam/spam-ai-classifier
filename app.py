@@ -1,23 +1,18 @@
 from flask import Flask, render_template, request
-import pickle
+from model import train_model
 
 app = Flask(__name__)
 
-# Load trained model and vectorizer
-import os
-from model import train_model
-
-if os.path.exists("spam_model.pkl"):
-    model = pickle.load(open("spam_model.pkl", "rb"))
-    vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
-else:
-    model, vectorizer = train_model()
+# Train model when server starts
+model, vectorizer = train_model()
 
 model_name = type(model).__name__
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/predict", methods=["POST"])
 def predict():
@@ -33,7 +28,7 @@ def predict():
             f"<span style='color:red; font-weight:bold'>{word}</span>"
         )
 
-    # Convert text to TF-IDF
+    # Convert text using vectorizer
     text_vector = vectorizer.transform([email_text])
 
     prediction = model.predict(text_vector)[0]
@@ -49,5 +44,6 @@ def predict():
         model_used=model_name
     )
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
